@@ -1,4 +1,4 @@
-package com.componentes.game_2048.ui.theme
+package com.componentes.game_2048.view.ui.theme
 
 import android.app.Activity
 import android.os.Build
