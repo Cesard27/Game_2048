@@ -148,13 +148,13 @@ fun BoardGameCell(cellNumber: Int, UICellSize: Dp) {
                 .fillMaxSize()
                 .background(
                     shape = RoundedCornerShape(edge),
-                    color = InnerBox
+                    color = cellData.backgroundColor
                 ),
             contentAlignment = Alignment.Center
         ){
             Text(
                 fontSize = 25.sp,
-                color = DarkText,
+                color = cellData.textColor,
                 fontWeight = FontWeight.Bold,
                 text = if (cellNumber == DEFAULT_VALUE) "" else cellNumber.toString())
         }
@@ -168,6 +168,7 @@ fun getCellData(cellData: Int): CellData{
         4 -> Box4
         8 -> Box8
         16 -> Box16
+
         32 -> Box32
         64 -> Box64
         128 -> Box128
@@ -182,11 +183,10 @@ fun getCellData(cellData: Int): CellData{
     }
 
     val textColor = when(cellData) {
-        2, 4, 8, 16 -> DarkText
-        32, 64, 128 -> LightText
-
-        256, 512, 1024, 2048 -> DarkText
-        4096, 8192 -> LightText
+        2, 4, 32-> DarkText
+        64, 512, 1024 -> DarkText
+        8, 16, 256, 128 -> LightText
+        128, 2048, 4096 -> LightText
 
         else -> DarkText
     }

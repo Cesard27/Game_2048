@@ -18,21 +18,21 @@ val Background = Color(0xFFEED0CD)
 val OuterBox = Color(0xFF7A0056)
 val InnerBox = Color(0xFF90517E)
 val LightText = Color(0xFFFDE8E9)
-val DarkText = Color(0xFF596475)
+val DarkText = Color(0xFF29001D)
 
 //NUMBER VARIATIONS COLORS
 
-val Box2 = Color(0xFFD85839)
-val Box4 = Color(0xFFD44725)
+val Box2 = Color(0xFFE48D77)
+val Box4 = Color(0xFFDD7055)
 val Box8 = Color(0xFFD0350F)
 val Box16 = Color(0xFFAE1E1E)
 
-val Box32 = Color(0xFF3571B2)
-val Box64 = Color(0xFF2163AA)
+val Box32 = Color(0xFF81ACD9)
+val Box64 = Color(0xFF6297D0)
 val Box128 = Color(0xFF0B53A1)
 val Box256 = Color(0xFF0A4B92)
 
-val Box512 = Color(0xFF7D457A)
-val Box1024 = Color(0xFF70326D)
+val Box512 = Color(0xFFB77BB4)
+val Box1024 = Color(0xFFA861A5)
 val Box2048 = Color(0xFF621E5E)
 val Box4096 = Color(0xFF52084E)
