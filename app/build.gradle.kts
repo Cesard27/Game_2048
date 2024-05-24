@@ -1,7 +1,14 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.dagger.hilt.android")
+    id("kotlin-kapt")
 }
+
+kapt {
+    correctErrorTypes = true
+}
+
 
 android {
     namespace = "com.componentes.game_2048"
@@ -38,6 +45,7 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
+
     }
     packaging {
         resources {
@@ -68,5 +76,6 @@ dependencies {
 
 
     implementation("androidx.navigation:navigation-compose:2.7.7")
-
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.51.1")
 }

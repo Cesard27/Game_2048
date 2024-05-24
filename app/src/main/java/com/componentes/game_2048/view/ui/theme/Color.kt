@@ -22,5 +22,17 @@ val DarkText = Color(0xFF596475)
 
 //NUMBER VARIATIONS COLORS
 
-val Box2 = Color(0xFFEED0CD)
-//val Box4 = Color()
+val Box2 = Color(0xFFD85839)
+val Box4 = Color(0xFFD44725)
+val Box8 = Color(0xFFD0350F)
+val Box16 = Color(0xFFAE1E1E)
+
+val Box32 = Color(0xFF3571B2)
+val Box64 = Color(0xFF2163AA)
+val Box128 = Color(0xFF0B53A1)
+val Box256 = Color(0xFF0A4B92)
+
+val Box512 = Color(0xFF7D457A)
+val Box1024 = Color(0xFF70326D)
+val Box2048 = Color(0xFF621E5E)
+val Box4096 = Color(0xFF52084E)
