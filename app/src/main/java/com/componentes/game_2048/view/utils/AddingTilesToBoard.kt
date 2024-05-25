@@ -27,7 +27,7 @@ class AddTilesInBoard{
         for (rowIndex in 0..<lineSize) {
             for (cellIndex in 0..<lineSize) {
                 val cell = boardGame[rowIndex][cellIndex]
-                if (cell == DEFAULT_VALUE) {
+                if (cell == EMPTY_VALUE) {
                     validCells.add(Pair(rowIndex, cellIndex))
                 }
             }

@@ -22,7 +22,7 @@ import com.componentes.game_2048.view.ui.theme.OuterBox
 val IconButtonHeight = 70.dp
 
 @Composable
-fun IconButton(
+fun IconButtonComponent(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {

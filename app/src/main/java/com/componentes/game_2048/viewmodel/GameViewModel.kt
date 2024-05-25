@@ -1,19 +1,19 @@
 package com.componentes.game_2048.viewmodel
 
-import android.util.Log
-import android.widget.Toast
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import com.componentes.game_2048.model.Direction
+import com.componentes.game_2048.model.Direction.*
 import com.componentes.game_2048.model.GameState
+import com.componentes.game_2048.model.GameStatus.*
 import com.componentes.game_2048.view.utils.CreateGameBoard
-import com.componentes.game_2048.view.utils.MoveNumberResult
 import com.componentes.game_2048.view.utils.TileMovement
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
+
+const val WINNING_NUMBER = 2048
 
 @HiltViewModel
 class GameViewModel @Inject constructor(
@@ -28,22 +28,27 @@ class GameViewModel @Inject constructor(
         startNewGame()
     }
 
-    private fun startNewGame() {
+    fun startNewGame() {
         _gameState.update {
             it.copy(
                 board = boardGame.gameBoard(4),
-                isGameOver = false
+                gameStatus = IS_PLAYING,
+                winningNumber = WINNING_NUMBER
             )
         }
     }
 
     fun moveTiles(direction: Direction) = with(_gameState.value){
-        val newBoard = movingTile.moveNumbers(board, direction, isGameOver)
+
+        if (direction == NONE) return@with
+
+        val newBoard = movingTile.moveNumbers(board, direction, gameStatus, winningNumber)
 
         _gameState.update {
             it.copy(
                 board = newBoard.boardGame,
-                isGameOver = newBoard.isGameOver
+                gameStatus = newBoard.gameStatus,
+                winningNumber = newBoard.winningNumber
             )
         }
 

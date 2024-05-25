@@ -1,33 +1,35 @@
 package com.componentes.game_2048.view.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.componentes.game_2048.R
 import com.componentes.game_2048.model.Direction
 import com.componentes.game_2048.model.GameState
 import com.componentes.game_2048.viewmodel.GameViewModel
 import com.componentes.game_2048.model.Direction.*
+import com.componentes.game_2048.model.GameStatus.*
+import com.componentes.game_2048.model.getCellData
 import com.componentes.game_2048.utils.DragGestureDirectionDetector
 import com.componentes.game_2048.view.components.AppName
 import com.componentes.game_2048.view.components.AppNameHeight
+import com.componentes.game_2048.view.components.IconButtonComponent
 import com.componentes.game_2048.view.components.IconButtonHeight
 import com.componentes.game_2048.view.ui.theme.*
-import com.componentes.game_2048.view.utils.DEFAULT_VALUE
+import com.componentes.game_2048.view.utils.EMPTY_VALUE
 
 val edge = 5.dp
 val inside_padding = 3.dp
@@ -42,11 +44,17 @@ fun BoardGameScreen(viewModel: GameViewModel, UIState: GameState) {
     val UIBoardSize = configuration.screenWidthDp.dp.minus(outside_padding + outside_padding)
     val reStartButton = outside_padding + AppNameHeight + bottomMarginBoard + UIBoardSize + 10.dp
 
+    val messageToShow = when (UIState.gameStatus) {
+        IS_PLAYING -> R.string.is_playing
+        GAME_OVER -> R.string.game_over
+        PLAYER_WINS -> R.string.player_wins
+    }
+
     Box{
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(InnerBox),
+                .background(Background), // Games background !!!
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row(
@@ -59,21 +67,21 @@ fun BoardGameScreen(viewModel: GameViewModel, UIState: GameState) {
                         bottom = bottomMarginBoard
                     ),
                 horizontalArrangement = Arrangement.Start
-            ){
+            ) {
                 AppName()
             }
-        }
 
-        BoardGame(UIState.board, currentDirection, UIBoardSize)
-        Spacer(modifier = Modifier.height(IconButtonHeight + 10.dp))
-        Text(
-            text = "this is a message",
-            fontSize = 30.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier
-                .fillMaxHeight()
-                .wrapContentHeight()
-        )
+            BoardGame(UIState.board, currentDirection, UIBoardSize)
+            Spacer(modifier = Modifier.height(IconButtonHeight + 10.dp))
+            Text(
+                text = stringResource(messageToShow),
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .wrapContentHeight()
+            )
+        }
     }
 
     DragGestureDirectionDetector(
@@ -87,12 +95,12 @@ fun BoardGameScreen(viewModel: GameViewModel, UIState: GameState) {
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center
         ) {
-            IconButton(
+            IconButtonComponent(
                 modifier = Modifier.offset(y = reStartButton),
                 onClick = {
-
+                    viewModel.startNewGame()
                 }
-            ){}
+            )
         }
     }
 
@@ -156,48 +164,7 @@ fun BoardGameCell(cellNumber: Int, UICellSize: Dp) {
                 fontSize = 25.sp,
                 color = cellData.textColor,
                 fontWeight = FontWeight.Bold,
-                text = if (cellNumber == DEFAULT_VALUE) "" else cellNumber.toString())
+                text = if (cellNumber == EMPTY_VALUE) "" else cellNumber.toString())
         }
     }
 }
-
-fun getCellData(cellData: Int): CellData{
-    val backgroundColor = when (cellData) {
-        DEFAULT_VALUE -> InnerBox
-        2 -> Box2
-        4 -> Box4
-        8 -> Box8
-        16 -> Box16
-
-        32 -> Box32
-        64 -> Box64
-        128 -> Box128
-
-        256 -> Box256
-        512 -> Box512
-        1024 -> Box1024
-        2048 -> Box2048
-        4096 -> Box4096
-
-        else -> Color.Green
-    }
-
-    val textColor = when(cellData) {
-        2, 4, 32-> DarkText
-        64, 512, 1024 -> DarkText
-        8, 16, 256, 128 -> LightText
-        128, 2048, 4096 -> LightText
-
-        else -> DarkText
-    }
-
-    return CellData(
-        backgroundColor = backgroundColor,
-        textColor = textColor
-    )
-}
-
-data class CellData(
-    val backgroundColor: Color,
-    val textColor: Color
-)

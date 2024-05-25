@@ -2,30 +2,38 @@ package com.componentes.game_2048.view.utils
 
 import com.componentes.game_2048.model.Direction
 import com.componentes.game_2048.model.Direction.*
-import com.componentes.game_2048.view.utils.MoveNumberResult.*
+import com.componentes.game_2048.model.GameStatus
 import javax.inject.Inject
 
 class TileMovement @Inject constructor(
     private val addingTileCase: AddTilesInBoard,
-    private val possibleMoveCase: isMovingPossible
+    private val possibleMoveCase: isMovingPossible,
+    private val checkWinConditionCase: CheckWinCondition
 ){
 
     fun moveNumbers(
         boardGame: MutableList<MutableList<Int>>,
         direction: Direction,
-        isGameOver: Boolean): MoveNumberResult {
+        isGameOver: GameStatus,
+        winningNumber: Int
+    ): MoveNumberResult {
 
-        var boardGameAfterMove = getBoardGameAfterMove(boardGame, direction) ?:
-            return MoveNumberResult(boardGame, isGameOver)
+        var boardGameAfterMove = combineNMove(boardGame, direction) ?:
+            return MoveNumberResult(boardGame, isGameOver, winningNumber)
 
         boardGameAfterMove = addingTileCase.addTile(boardGameAfterMove)
 
+        val result = possibleMoveCase.existNCheckToContinue(boardGameAfterMove, winningNumber)
 
-        return possibleMoveCase.existMove(boardGameAfterMove)
+
+        return checkWinConditionCase.checkingCondition(
+            result = result,
+            winningNumber = winningNumber
+        )
 
     }
 
-    private fun getBoardGameAfterMove(
+    private fun combineNMove(
         boardGamePrime: MutableList<MutableList<Int>>,
         direction: Direction
     ): MutableList<MutableList<Int>>?{
@@ -60,7 +68,7 @@ private fun getHorizontalMovement(
 
         //delete default_value
         for (index in row.size-1 downTo 0) {
-            if (row[index]== DEFAULT_VALUE) {
+            if (row[index]== EMPTY_VALUE) {
                 row.removeAt(index)
             }
         }
@@ -85,7 +93,7 @@ private fun getHorizontalMovement(
 
         //
         for (repetition in 0..<boardSize - newRow.size) {
-            newRow.add(DEFAULT_VALUE)
+            newRow.add(EMPTY_VALUE)
         }
 
         //
@@ -108,7 +116,7 @@ private fun getVerticalMovement(
 
         for (rowIndex in 0..<boardSize) {
             val cell = boardGame[rowIndex][columnIndex]
-            if (cell != DEFAULT_VALUE) {
+            if (cell != EMPTY_VALUE) {
                 column.add(cell)
             }
         }
@@ -130,7 +138,7 @@ private fun getVerticalMovement(
         }
 
         for (repetition in 0..<boardSize - newColumn.size) {
-            newColumn.add(DEFAULT_VALUE)
+            newColumn.add(EMPTY_VALUE)
         }
 
         if (direction == DOWN) {

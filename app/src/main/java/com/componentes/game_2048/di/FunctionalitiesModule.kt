@@ -1,9 +1,6 @@
 package com.componentes.game_2048.di
 
-import com.componentes.game_2048.view.utils.AddTilesInBoard
-import com.componentes.game_2048.view.utils.CreateGameBoard
-import com.componentes.game_2048.view.utils.TileMovement
-import com.componentes.game_2048.view.utils.isMovingPossible
+import com.componentes.game_2048.view.utils.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,30 +12,29 @@ import dagger.hilt.components.SingletonComponent
 object FunctionalitiesModule {
 
     @Provides
-    fun providesAddingTilesToBoard(
-    ): AddTilesInBoard {
-        return AddTilesInBoard()
-    }
+    fun providesAddingTilesToBoard() = AddTilesInBoard()
 
     @Provides
     fun providesGameBoard(
         addTileCase: AddTilesInBoard
-    ): CreateGameBoard {
-        return CreateGameBoard(addTileCase)
-    }
+    ) = CreateGameBoard(addTileCase)
 
     @Provides
-    fun provideIsMovingPossible(
-    ): isMovingPossible {
-        return isMovingPossible()
-    }
+    fun provideIsMovingPossible() = isMovingPossible()
+
+
+    @Provides
+    fun provideCheckWinCondition() = CheckWinCondition()
 
     @Provides
     fun provideMovingTiles(
         addTileCase: AddTilesInBoard,
-        possibleMoveCase: isMovingPossible
+        possibleMoveCase: isMovingPossible,
+        checkWinCondition: CheckWinCondition
+
     ): TileMovement {
-        return TileMovement(addTileCase, possibleMoveCase)
+        return TileMovement(addTileCase, possibleMoveCase, checkWinCondition)
     }
+
 }
 

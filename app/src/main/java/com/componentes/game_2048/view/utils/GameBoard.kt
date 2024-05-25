@@ -2,14 +2,14 @@ package com.componentes.game_2048.view.utils
 
 import javax.inject.Inject
 
-const val DEFAULT_VALUE = -1
+const val EMPTY_VALUE = -1
 class CreateGameBoard @Inject constructor(
     private val addTileCase: AddTilesInBoard
 ) {
     fun gameBoard(size: Int): MutableList<MutableList<Int>> {
         var boardGame = MutableList(size) {
             MutableList(size) {
-                DEFAULT_VALUE
+                EMPTY_VALUE
             }
         }
 
