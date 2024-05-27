@@ -72,7 +72,19 @@ fun BoardGameScreen(viewModel: GameViewModel, UIState: GameState) {
             }
 
             BoardGame(UIState.board, currentDirection, UIBoardSize)
+
+
+
             Spacer(modifier = Modifier.height(IconButtonHeight + 10.dp))
+            // Mostrar el puntaje
+            Text(
+                text = "Score: ${UIState.score}",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .padding(top = 8.dp)
+            )
+
             Text(
                 text = stringResource(messageToShow),
                 fontSize = 30.sp,
@@ -81,6 +93,8 @@ fun BoardGameScreen(viewModel: GameViewModel, UIState: GameState) {
                     .fillMaxHeight()
                     .wrapContentHeight()
             )
+
+
         }
     }
 

@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
     id("kotlin-kapt")
+    id("com.google.gms.google-services")
 }
 
 kapt {
@@ -65,6 +66,9 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.ui:ui-tooling:1.6.7")
     implementation("androidx.compose.material3:material3")
+    implementation("com.google.firebase:firebase-common-ktx:21.0.0")
+    implementation("androidx.media3:media3-common:1.3.1")
+    implementation("com.google.firebase:firebase-firestore-ktx:25.0.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -78,4 +82,9 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation("com.google.dagger:hilt-android:2.51.1")
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
+
+
+    // Firebase Integration
+
+    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
 }
