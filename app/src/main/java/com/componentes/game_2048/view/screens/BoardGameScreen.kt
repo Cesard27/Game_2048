@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,7 +44,7 @@ fun BoardGameScreen(viewModel: GameViewModel, UIState: GameState) {
     var currentDirection by remember { mutableStateOf(NONE) }
     val configuration = LocalConfiguration.current
     val UIBoardSize = configuration.screenWidthDp.dp.minus(outside_padding + outside_padding)
-    val reStartButton = outside_padding + AppNameHeight + bottomMarginBoard + UIBoardSize + 10.dp
+    val reStartButton = outside_padding + AppNameHeight + bottomMarginBoard + UIBoardSize + 15.dp
 
     val messageToShow = when (UIState.gameStatus) {
         IS_PLAYING -> R.string.is_playing
@@ -75,13 +76,13 @@ fun BoardGameScreen(viewModel: GameViewModel, UIState: GameState) {
 
             BoardGame(UIState.board, currentDirection, UIBoardSize)
 
-            Spacer(modifier = Modifier.height(IconButtonHeight + 10.dp))
+            Spacer(modifier = Modifier.height(IconButtonHeight + 25.dp))
             // Mostrar el puntaje
             Text(
-                text = "Score: ${UIState.score}",
+                text = stringResource(R.string.Score) + "${UIState.score}",
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.White,
+                color = DarkText,
                 modifier = Modifier
                     .background(
                         BoxScore,
@@ -89,7 +90,8 @@ fun BoardGameScreen(viewModel: GameViewModel, UIState: GameState) {
                     )
                     .padding(
                         horizontal = 16.dp,
-                        vertical = 8.dp)
+                        vertical = 8.dp),
+                textAlign = TextAlign.Center
             )
 
             Text(

@@ -3,4 +3,5 @@
     <string name="is_playing"></string>
     <string name="game_over">Juego Terminado</string>
     <string name="player_wins">Has Ganado</string>
+    <string name="Score">Puntuacion: \n</string>
 </resources>

@@ -33,16 +33,16 @@ fun IconButtonComponent(
             .width(IconButtonHeight),
         shape = RoundedCornerShape(edge),
         colors = ButtonDefaults.buttonColors(
-            contentColor = DarkText,
-            containerColor = OuterBox,
-            disabledContentColor = InnerBox,
-            disabledContainerColor = LightText
+            contentColor = LightText,
+            containerColor = InnerBox,
+            disabledContentColor = OuterBox,
+            disabledContainerColor = DarkText
         )
     ){
         Icon(
             Icons.Rounded.Refresh,
             contentDescription = null,
-            modifier = Modifier.size(150.dp)
+            modifier = Modifier.size(200.dp)
         )
     }
 }
