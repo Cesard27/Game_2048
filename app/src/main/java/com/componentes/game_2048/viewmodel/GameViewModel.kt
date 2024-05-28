@@ -1,13 +1,17 @@
 package com.componentes.game_2048.viewmodel
 
+import FirestoreManager
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.componentes.game_2048.model.Direction
 import com.componentes.game_2048.model.Direction.*
 import com.componentes.game_2048.model.GameState
 import com.componentes.game_2048.model.GameStatus.*
-import com.componentes.game_2048.model.persistence.FirestoreUtil
 import com.componentes.game_2048.view.utils.CreateGameBoard
 import com.componentes.game_2048.view.utils.TileMovement
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,7 +34,8 @@ class GameViewModel @Inject constructor(
         get() = gameState.value.score
 
     init {
-        startNewGame()
+        //startNewGame()
+        loadGameState()
     }
 
     fun startNewGame() {
@@ -79,19 +84,26 @@ class GameViewModel @Inject constructor(
     }
 
     fun saveGameState(gameState: GameState) {
-        FirestoreUtil.saveGameState(gameState)
+        FirestoreManager.saveGameState(gameState)
     }
 
-    fun loadGameState() {
-        FirestoreUtil.loadGameState(
+
+
+    private fun loadGameState() {
+        FirestoreManager.loadGameState(
             onSuccess = { gameState ->
-                // Actualizar el estado del juego en la ViewModel
-                // gameStateLiveData.value = gameState
+                _gameState.value = gameState
+                Log.d("juegoCargado", "Juego Cargado exitosamente")
             },
             onFailure = { exception ->
-                // Manejar el error
+                // Manejar el error aquí, por ejemplo, mostrar un mensaje de error
+                Log.d("juegoCargado","Error en la DB")
+                startNewGame()
             }
         )
     }
+
+
+
 
 }

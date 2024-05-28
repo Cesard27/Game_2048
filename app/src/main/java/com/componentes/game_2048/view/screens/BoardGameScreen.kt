@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -119,6 +120,34 @@ fun BoardGameScreen(viewModel: GameViewModel, UIState: GameState) {
     }
 
 }
+
+@Composable
+fun GameBoard(gameState: GameState) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        for (row in gameState.board) {
+            Row {
+                for (cell in row) {
+                    Box(
+                        modifier = Modifier
+                            .size(64.dp)
+                            .background(Color.Gray)
+                            .padding(4.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(text = cell.toString())
+                    }
+                }
+            }
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(text = "Score: ${gameState.score}")
+    }
+}
+
 
 @Composable
 fun BoardGame(tableData: List<List<Int>>, currentDirection: Direction, UIBoardSize: Dp) {
