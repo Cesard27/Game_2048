@@ -45,7 +45,7 @@ fun AppName(
             fontSize = 30.sp,
             fontWeight = FontWeight.Bold,
             //text = stringResource(R.string.app_name),
-            text = "Example",
+            text = "2048",
             modifier = Modifier.padding(vertical = verticalPadding, horizontal = 20.dp),
             color = DarkText
         )

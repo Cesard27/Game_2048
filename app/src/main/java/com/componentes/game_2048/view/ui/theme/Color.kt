@@ -36,3 +36,6 @@ val Box512 = Color(0xFFB77BB4)
 val Box1024 = Color(0xFFA861A5)
 val Box2048 = Color(0xFF621E5E)
 val Box4096 = Color(0xFF52084E)
+
+
+val BoxScore = Color(0xFFBBADA0)

@@ -58,6 +58,7 @@ fun BoardGameScreen(viewModel: GameViewModel, UIState: GameState) {
                 .background(Background), // Games background !!!
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -74,16 +75,21 @@ fun BoardGameScreen(viewModel: GameViewModel, UIState: GameState) {
 
             BoardGame(UIState.board, currentDirection, UIBoardSize)
 
-
-
             Spacer(modifier = Modifier.height(IconButtonHeight + 10.dp))
             // Mostrar el puntaje
             Text(
                 text = "Score: ${UIState.score}",
-                fontSize = 20.sp,
+                fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
+                color = Color.White,
                 modifier = Modifier
-                    .padding(top = 8.dp)
+                    .background(
+                        BoxScore,
+                        RoundedCornerShape(4.dp)
+                    )
+                    .padding(
+                        horizontal = 16.dp,
+                        vertical = 8.dp)
             )
 
             Text(
@@ -94,8 +100,6 @@ fun BoardGameScreen(viewModel: GameViewModel, UIState: GameState) {
                     .fillMaxHeight()
                     .wrapContentHeight()
             )
-
-
         }
     }
 
@@ -116,9 +120,22 @@ fun BoardGameScreen(viewModel: GameViewModel, UIState: GameState) {
                     viewModel.startNewGame()
                 }
             )
+
+
         }
     }
 
+}
+
+@Composable
+fun showScore(UIState: GameState){
+    Text(
+        text = "Score: ${UIState.score}",
+        fontSize = 20.sp,
+        fontWeight = FontWeight.Bold,
+        modifier = Modifier
+            .padding(top = 8.dp)
+    )
 }
 
 @Composable
